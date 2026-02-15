@@ -12,14 +12,14 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Custom Styles -->
     <style>
         body {
-            font-family: 'Sarabun', sans-serif;
-            background-color: #f3f4f6;
-            color: #1f2937;
+            font-family: 'Roboto', 'Sarabun', sans-serif;
+            background-color: #f8f9fa; /* Google-ish surface */
+            color: #202124; /* Google text */
         }
 
         .chart-container {
@@ -62,16 +62,6 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
         
-        .tab-btn.active {
-            border-bottom: 3px solid #1e40af; /* blue-800 */
-            color: #1e3a8a; /* blue-900 */
-            font-weight: 700;
-        }
-        .tab-btn {
-            color: #64748b; /* slate-500 */
-            font-weight: 500;
-        }
-
         /* Flip Card Effect for Flashcards */
         .flip-card {
             background-color: transparent;
@@ -113,6 +103,51 @@
             transform: rotateY(180deg);
             border: 2px solid #3b82f6;
         }
+    
+
+/* Google Theme Variables (Material-ish) */
+:root{
+    --g-blue:#1a73e8;
+    --g-green:#34a853;
+    --g-yellow:#fbbc04;
+    --g-red:#ea4335;
+    --g-surface:#ffffff;
+    --g-bg:#f8f9fa;
+    --g-text:#202124;
+    --g-muted:#5f6368;
+    --g-border:#e0e3e7;
+}
+
+/* Softer default card look */
+.g-card{
+    background: var(--g-surface);
+    border: 1px solid var(--g-border);
+    border-radius: 1rem;
+    box-shadow: 0 1px 2px rgba(60,64,67,.1), 0 1px 3px 1px rgba(60,64,67,.08);
+}
+
+.tab-btn.active {
+    border-bottom: 3px solid var(--g-blue);
+    color: var(--g-blue);
+    font-weight: 700;
+}
+.tab-btn { color: var(--g-muted); font-weight: 500; }
+
+/* Flip cards (Material-ish) */
+.flip-card-front, .flip-card-back{
+    box-shadow: 0 1px 2px rgba(60,64,67,.1), 0 1px 3px 1px rgba(60,64,67,.08);
+}
+.flip-card-front{
+    background-color:#fff;
+    color: var(--g-text);
+    border: 1px solid var(--g-border);
+}
+.flip-card-back{
+    background-color:#e8f0fe;
+    color: var(--g-text);
+    border: 1px solid var(--g-blue);
+}
+
     </style>
 
     <!-- Chosen Palette: Royal Thai Police Authority -->
@@ -146,23 +181,23 @@
 <body class="flex flex-col min-h-screen">
 
     <!-- HEADER -->
-    <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
+    <header class="bg-white text-slate-800 border-b border-gray-200/70 sticky top-0 z-50">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center py-4">
                 <div class="flex items-center space-x-3 mb-4 md:mb-0">
                     <span class="text-3xl">👮‍♂️</span>
                     <div>
                         <h1 class="text-xl md:text-2xl font-bold tracking-wide">POLICE EXAM TACTICS 2569</h1>
-                        <p class="text-xs text-slate-400 uppercase tracking-widest">Ultra Max Tutoring System</p>
+                        <p class="text-xs text-gray-500 uppercase tracking-widest">Ultra Max Tutoring System</p>
                     </div>
                 </div>
                 
                 <!-- Navigation -->
                 <nav class="flex space-x-6 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
-                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="tab-btn active text-sm md:text-base whitespace-nowrap px-2 py-1 transition-colors hover:text-white">แผนที่การเรียน (Map)</button>
-                    <button onclick="switchTab('memory')" id="nav-memory" class="tab-btn text-sm md:text-base whitespace-nowrap px-2 py-1 transition-colors hover:text-white">คลังความจำ (Memory)</button>
-                    <button onclick="switchTab('drill')" id="nav-drill" class="tab-btn text-sm md:text-base whitespace-nowrap px-2 py-1 transition-colors hover:text-white">สนามฝึก (Drills)</button>
-                    <button onclick="switchTab('strategy')" id="nav-strategy" class="tab-btn text-sm md:text-base whitespace-nowrap px-2 py-1 transition-colors hover:text-white">แผน 21 วัน (Plan)</button>
+                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="tab-btn active text-sm md:text-base whitespace-nowrap px-3 py-2 rounded-full transition hover:bg-gray-100 hover:text-blue-600">แผนที่การเรียน (Map)</button>
+                    <button onclick="switchTab('memory')" id="nav-memory" class="tab-btn text-sm md:text-base whitespace-nowrap px-3 py-2 rounded-full transition hover:bg-gray-100 hover:text-blue-600">คลังความจำ (Memory)</button>
+                    <button onclick="switchTab('drill')" id="nav-drill" class="tab-btn text-sm md:text-base whitespace-nowrap px-3 py-2 rounded-full transition hover:bg-gray-100 hover:text-blue-600">สนามฝึก (Drills)</button>
+                    <button onclick="switchTab('strategy')" id="nav-strategy" class="tab-btn text-sm md:text-base whitespace-nowrap px-3 py-2 rounded-full transition hover:bg-gray-100 hover:text-blue-600">แผน 21 วัน (Plan)</button>
                 </nav>
             </div>
         </div>
@@ -174,7 +209,7 @@
         <!-- SECTION 1: LEARNING HUB (DASHBOARD) -->
         <section id="view-dashboard" class="space-y-8 animate-fade-in">
             <!-- Intro -->
-            <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-800">
+            <div class="g-card p-6 border-l-4 border-blue-600">
                 <h2 class="text-2xl font-bold text-slate-800 mb-2">ยินดีต้อนรับสู่ "เส้นทางสู่ดาวเงิน" (Course Map)</h2>
                 <p class="text-slate-600">
                     ระบบการติวแบบ "Ultra Max" ออกแบบมาให้ท่านเก็บคะแนนจากเรื่องง่ายไปยาก เริ่มต้นจากพื้นฐาน Office ไต่ระดับสู่ Cybersecurity และ Cloud Computing 
@@ -185,7 +220,7 @@
             <!-- Stats Overview -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Chart 1: Module Difficulty -->
-                <div class="bg-white p-6 rounded-xl shadow-sm">
+                <div class="g-card p-6">
                     <h3 class="font-bold text-slate-700 mb-4 flex items-center">
                         <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2">ANALYSIS</span>
                         ความยาก vs เวลาเรียน (Difficulty/Time)
@@ -197,7 +232,7 @@
                 </div>
 
                 <!-- Text Stats: Key Targets -->
-                <div class="bg-white p-6 rounded-xl shadow-sm flex flex-col justify-between">
+                <div class="g-card p-6 flex flex-col justify-between">
                     <div>
                         <h3 class="font-bold text-slate-700 mb-4">เป้าหมายคะแนน (Score Targets)</h3>
                         <div class="space-y-4">
@@ -233,7 +268,7 @@
                 </div>
 
                 <!-- Module List / Quick Access -->
-                <div class="bg-white p-6 rounded-xl shadow-sm overflow-hidden flex flex-col">
+                <div class="g-card p-6 overflow-hidden flex flex-col">
                     <h3 class="font-bold text-slate-700 mb-4">ทางลัดบทเรียน (Quick Access)</h3>
                     <div class="flex-grow overflow-y-auto custom-scroll pr-2 space-y-3">
                         <button onclick="alert('Module 1: Computer Basics - เน้น RAM/ROM, Input/Output')" class="w-full text-left p-3 rounded-lg bg-gray-50 hover:bg-blue-50 transition border border-gray-100 hover:border-blue-200 group">
@@ -273,16 +308,16 @@
 
         <!-- SECTION 2: MEMORY BANK (FLASHCARDS) -->
         <section id="view-memory" class="hidden space-y-8 animate-fade-in">
-            <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-amber-500 flex flex-col md:flex-row justify-between items-start md:items-center">
+            <div class="g-card p-6 border-l-4 border-amber-500 flex flex-col md:flex-row justify-between items-start md:items-center">
                 <div>
                     <h2 class="text-2xl font-bold text-slate-800 mb-2">คลังความจำ (Memory Bank)</h2>
                     <p class="text-slate-600 text-sm">เทคนิค: คลิกที่การ์ดเพื่อดูเฉลยและเทคนิคจำ พยายามตอบให้ได้ก่อนพลิกการ์ด</p>
                 </div>
                 <div class="mt-4 md:mt-0 flex space-x-2">
-                    <button onclick="filterCards('all')" class="px-3 py-1 bg-slate-800 text-white rounded-md text-sm hover:bg-slate-700">ทั้งหมด</button>
-                    <button onclick="filterCards('excel')" class="px-3 py-1 bg-blue-100 text-blue-800 rounded-md text-sm hover:bg-blue-200">Excel</button>
-                    <button onclick="filterCards('cyber')" class="px-3 py-1 bg-red-100 text-red-800 rounded-md text-sm hover:bg-red-200">Cyber</button>
-                    <button onclick="filterCards('trap')" class="px-3 py-1 bg-amber-100 text-amber-800 rounded-md text-sm hover:bg-amber-200">Traps</button>
+                    <button onclick="filterCards('all')" class="px-4 py-2 bg-blue-600 text-white rounded-full text-sm hover:bg-blue-700">ทั้งหมด</button>
+                    <button onclick="filterCards('excel')" class="px-3 py-1 bg-blue-50 text-blue-700 border border-blue-200 rounded-full text-sm hover:bg-blue-100">Excel</button>
+                    <button onclick="filterCards('cyber')" class="px-3 py-1 bg-red-50 text-red-700 border border-red-200 rounded-full text-sm hover:bg-red-100">Cyber</button>
+                    <button onclick="filterCards('trap')" class="px-3 py-1 bg-yellow-50 text-yellow-700 border border-yellow-200 rounded-full text-sm hover:bg-yellow-100">Traps</button>
                 </div>
             </div>
 
@@ -294,12 +329,12 @@
 
         <!-- SECTION 3: DRILL GROUND (QUIZ) -->
         <section id="view-drill" class="hidden space-y-8 animate-fade-in">
-            <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-green-600">
+            <div class="g-card p-6 border-l-4 border-green-600">
                 <h2 class="text-2xl font-bold text-slate-800 mb-2">สนามฝึก (Drill Ground)</h2>
                 <p class="text-slate-600">ฝึกทำโจทย์เสมือนจริง (Scenario-based) พร้อมเฉลยละเอียดแบบติวเตอร์ เลือกคำตอบที่คิดว่าถูกที่สุด</p>
             </div>
 
-            <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+            <div class="g-card overflow-hidden">
                 <div class="p-6 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
                     <h3 class="font-bold text-slate-700" id="drill-question-count">โจทย์ฝึกชุดที่ 1 (5 ข้อ)</h3>
                     <span class="text-xs text-gray-500">คลิกตัวเลือกเพื่อตรวจคำตอบ</span>
@@ -313,7 +348,7 @@
 
         <!-- SECTION 4: STRATEGY ROOM (PLAN) -->
         <section id="view-strategy" class="hidden space-y-8 animate-fade-in">
-            <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-slate-700">
+            <div class="g-card p-6 border-l-4 border-gray-200">
                 <h2 class="text-2xl font-bold text-slate-800 mb-2">แผนยุทธการ 21 วัน (Strategy 21)</h2>
                 <p class="text-slate-600">ตารางการอ่านหนังสือแบบ Spaced Repetition (อ่าน-ทวน-สอบ) เพื่อความพร้อมสูงสุด</p>
             </div>
@@ -322,7 +357,7 @@
                 <!-- Calendar View -->
                 <div class="lg:col-span-2 space-y-6">
                     <!-- Week 1 -->
-                    <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-500">
+                    <div class="g-card p-6 border-l-4 border-blue-500">
                         <div class="flex justify-between mb-4">
                             <h3 class="font-bold text-lg text-blue-900">WEEK 1: ปูพื้นฐาน (Foundation)</h3>
                             <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">Days 1-7</span>
@@ -360,7 +395,7 @@
                     </div>
 
                     <!-- Week 2 -->
-                    <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-amber-500">
+                    <div class="g-card p-6 border-l-4 border-amber-500">
                         <div class="flex justify-between mb-4">
                             <h3 class="font-bold text-lg text-amber-900">WEEK 2: ประยุกต์ใช้ (Application)</h3>
                             <span class="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded">Days 8-14</span>
@@ -392,19 +427,19 @@
                 </div>
 
                 <!-- Top 10 Topics List -->
-                <div class="bg-slate-800 text-white p-6 rounded-xl shadow-lg h-fit">
-                    <h3 class="font-bold text-lg mb-4 text-amber-400">🔥 Top 10 Must Read</h3>
-                    <p class="text-xs text-slate-400 mb-6">Probability สูงสุด 10 อันดับแรกจากระบบวิเคราะห์</p>
+                <div class="g-card p-6 h-fit">
+                    <h3 class="font-bold text-lg mb-4 text-yellow-600">🔥 Top 10 Must Read</h3>
+                    <p class="text-xs text-gray-500 mb-6">Probability สูงสุด 10 อันดับแรกจากระบบวิเคราะห์</p>
                     <ol class="list-decimal list-inside space-y-3 text-sm">
-                        <li class="pb-2 border-b border-slate-700">Excel: VLOOKUP (Exact Match)</li>
-                        <li class="pb-2 border-b border-slate-700">Excel: IF & Nested IF</li>
-                        <li class="pb-2 border-b border-slate-700">Cyber: Phishing Identification</li>
-                        <li class="pb-2 border-b border-slate-700">Cloud: SaaS Definition</li>
-                        <li class="pb-2 border-b border-slate-700">Word: Mail Merge Steps</li>
-                        <li class="pb-2 border-b border-slate-700">Law: PDPA Rights</li>
-                        <li class="pb-2 border-b border-slate-700">Cyber: Ransomware</li>
-                        <li class="pb-2 border-b border-slate-700">Excel: Absolute Reference ($)</li>
-                        <li class="pb-2 border-b border-slate-700">Network: IP Address</li>
+                        <li class="pb-2 border-b border-gray-200">Excel: VLOOKUP (Exact Match)</li>
+                        <li class="pb-2 border-b border-gray-200">Excel: IF & Nested IF</li>
+                        <li class="pb-2 border-b border-gray-200">Cyber: Phishing Identification</li>
+                        <li class="pb-2 border-b border-gray-200">Cloud: SaaS Definition</li>
+                        <li class="pb-2 border-b border-gray-200">Word: Mail Merge Steps</li>
+                        <li class="pb-2 border-b border-gray-200">Law: PDPA Rights</li>
+                        <li class="pb-2 border-b border-gray-200">Cyber: Ransomware</li>
+                        <li class="pb-2 border-b border-gray-200">Excel: Absolute Reference ($)</li>
+                        <li class="pb-2 border-b border-gray-200">Network: IP Address</li>
                         <li>Cyber: Strong Password Policy</li>
                     </ol>
                 </div>
@@ -414,10 +449,10 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-white border-t border-gray-200 py-6 mt-8">
+    <footer class="bg-transparent border-t border-gray-200/70 py-6 mt-8">
         <div class="container mx-auto px-4 text-center">
             <p class="text-slate-500 text-sm">Ultra Max Tutoring System © 2569</p>
-            <p class="text-xs text-slate-400 mt-1">For Educational Purpose - Police Exam Preparation</p>
+            <p class="text-xs text-gray-500 mt-1">For Educational Purpose - Police Exam Preparation</p>
         </div>
     </footer>
 
@@ -625,12 +660,12 @@
                         {
                             label: 'ความยาก (Difficulty)',
                             data: [2, 4, 9, 3, 5, 7, 8, 6, 4, 8],
-                            backgroundColor: 'rgba(239, 68, 68, 0.7)', // Red
+                            backgroundColor: 'rgba(234, 67, 53, 0.7)', // Red
                         },
                         {
                             label: 'เวลาที่ต้องใช้ (Hours)',
                             data: [2, 3, 8, 2, 3, 4, 5, 3, 2, 4],
-                            backgroundColor: 'rgba(59, 130, 246, 0.7)', // Blue
+                            backgroundColor: 'rgba(26, 115, 232, 0.7)', // Blue
                         }
                     ]
                 },
@@ -642,7 +677,7 @@
                     },
                     plugins: {
                         tooltip: {
-                            backgroundColor: 'rgba(30, 41, 59, 0.9)',
+                            backgroundColor: 'rgba(32, 33, 36, 0.9)',
                             titleFont: { family: 'Sarabun' },
                             bodyFont: { family: 'Sarabun' }
                         }
