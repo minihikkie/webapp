@@ -1,328 +1,556 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Police Cadet Prep — Google-style Landing</title>
 
-<title>POLICE CADET ELITE ACADEMY</title>
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-<script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --g-blue:#1a73e8;
+      --g-green:#34a853;
+      --g-yellow:#fbbc04;
+      --g-red:#ea4335;
 
-<style>
+      --g-bg:#f8f9fa;
+      --g-surface:#ffffff;
+      --g-text:#202124;
+      --g-muted:#5f6368;
+      --g-border:#e0e3e7;
 
-body{
-font-family:'Sarabun',sans-serif;
-background:#0a0f1c;
-color:white;
-}
+      --shadow-1: 0 1px 2px rgba(60,64,67,.12), 0 1px 3px 1px rgba(60,64,67,.08);
+      --shadow-2: 0 6px 18px rgba(60,64,67,.14), 0 2px 6px rgba(60,64,67,.10);
+    }
 
-.hero-gradient{
-background:
-radial-gradient(circle at 20% 30%, rgba(59,130,246,.25), transparent 40%),
-radial-gradient(circle at 80% 70%, rgba(220,38,38,.25), transparent 40%),
-linear-gradient(180deg,#05070f,#0a0f1c);
-}
+    body{
+      font-family:'Roboto','Sarabun',sans-serif;
+      background: var(--g-bg);
+      color: var(--g-text);
+    }
 
-.glow{
-box-shadow:
-0 0 10px rgba(59,130,246,.5),
-0 0 20px rgba(59,130,246,.3);
-}
+    .g-card{
+      background: var(--g-surface);
+      border: 1px solid var(--g-border);
+      border-radius: 18px;
+      box-shadow: var(--shadow-1);
+    }
+    .g-card:hover{ box-shadow: var(--shadow-2); transform: translateY(-1px); }
 
-.card{
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.08);
-backdrop-filter:blur(10px);
-}
+    .g-pill{
+      border: 1px solid var(--g-border);
+      background: #fff;
+      color: var(--g-muted);
+      border-radius: 9999px;
+    }
 
-.card:hover{
-transform:translateY(-5px);
-border-color:#3b82f6;
-}
+    .g-btn{
+      border-radius: 12px;
+      font-weight: 700;
+      transition: .15s ease;
+    }
+    .g-btn-primary{
+      background: var(--g-blue);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(26,115,232,.18);
+    }
+    .g-btn-primary:hover{ filter: brightness(.95); }
+    .g-btn-ghost{
+      background: #fff;
+      border: 1px solid var(--g-border);
+      color: var(--g-text);
+    }
+    .g-btn-ghost:hover{ border-color: rgba(26,115,232,.55); background: #f1f7ff; }
 
-</style>
+    .g-link{ color: var(--g-blue); font-weight: 600; }
+    .g-link:hover{ text-decoration: underline; }
 
+    .hero-bg{
+      background:
+        radial-gradient(900px 300px at 15% 15%, rgba(26,115,232,.14), transparent 60%),
+        radial-gradient(800px 320px at 85% 25%, rgba(52,168,83,.14), transparent 55%),
+        radial-gradient(900px 360px at 55% 95%, rgba(251,188,4,.14), transparent 60%),
+        linear-gradient(180deg, #ffffff 0%, #f8f9fa 40%, #f8f9fa 100%);
+    }
+
+    .badge{
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.35rem .65rem;
+      border-radius:9999px;
+      background:#e8f0fe;
+      border: 1px solid rgba(26,115,232,.25);
+      color:#174ea6;
+      font-weight:700;
+      font-size:.8rem;
+    }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      border: 1px solid var(--g-border);
+      background:#fff;
+      border-radius: 10px;
+      padding:.25rem .5rem;
+      font-size:.8rem;
+      color: var(--g-muted);
+    }
+
+    /* smooth */
+    .lift{ transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+    .lift:hover{ transform: translateY(-2px); }
+
+    /* tiny grid dots like modern google-ish */
+    .dots{
+      background-image: radial-gradient(rgba(32,33,36,.12) 1px, transparent 1px);
+      background-size: 18px 18px;
+      background-position: -2px -2px;
+      mask-image: radial-gradient(closest-side, rgba(0,0,0,.9), rgba(0,0,0,.0));
+      -webkit-mask-image: radial-gradient(closest-side, rgba(0,0,0,.9), rgba(0,0,0,.0));
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- HERO -->
-
-<section class="hero-gradient min-h-screen flex items-center">
-
-<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-
-<div>
-
-<div class="text-blue-400 font-bold mb-4">
-POLICE EXAMINATION ELITE SYSTEM
-</div>
-
-<h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6">
-
-ระบบติวสอบ  
-<span class="text-blue-500">นายร้อยตำรวจ</span>  
-ระดับ Elite
-
-</h1>
-
-<p class="text-gray-400 mb-8 text-lg">
-
-ระบบเดียวที่จำลองข้อสอบจริง  
-วิเคราะห์ pattern  
-และสร้างความได้เปรียบเหนือผู้สอบ 99%
-
-</p>
-
-<div class="flex gap-4">
-
-<button class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-lg glow font-bold">
-เริ่มเรียนทันที
-</button>
-
-<button class="border border-white/20 px-8 py-4 rounded-lg hover:border-blue-500">
-ดูตัวอย่างระบบ
-</button>
-
-</div>
-
-</div>
-
-
-<div>
-
-<div class="card p-6 rounded-xl">
-
-<div class="text-gray-400 mb-2">EXAM READINESS</div>
-
-<div class="text-5xl font-bold text-blue-500">
-93%
-</div>
-
-<div class="mt-4 h-2 bg-gray-800 rounded">
-<div class="h-2 bg-blue-500 rounded" style="width:93%"></div>
-</div>
-
-<div class="mt-6 text-gray-400">
-พร้อมสอบระดับ Elite
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- AUTHORITY -->
-
-<section class="py-20">
-
-<div class="max-w-6xl mx-auto px-6 text-center">
-
-<h2 class="text-4xl font-bold mb-12">
-ระบบที่สร้างขึ้นเพื่อชัยชนะ
-</h2>
-
-<div class="grid md:grid-cols-3 gap-8">
-
-<div class="card p-6 rounded-xl">
-
-<div class="text-blue-500 text-4xl mb-3">🎯</div>
-
-<div class="font-bold mb-2">Exam Simulation</div>
-
-<div class="text-gray-400 text-sm">
-จำลองข้อสอบจริงระดับ 100%
-</div>
-
-</div>
-
-
-<div class="card p-6 rounded-xl">
-
-<div class="text-blue-500 text-4xl mb-3">🧠</div>
-
-<div class="font-bold mb-2">AI Exam Analysis</div>
-
-<div class="text-gray-400 text-sm">
-วิเคราะห์ Pattern ข้อสอบจริง
-</div>
-
-</div>
-
-
-<div class="card p-6 rounded-xl">
-
-<div class="text-blue-500 text-4xl mb-3">⚡</div>
-
-<div class="font-bold mb-2">Elite Strategy</div>
-
-<div class="text-gray-400 text-sm">
-ระบบฝึกระดับหน่วยพิเศษ
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- SUBJECTS -->
-
-<section class="py-20 bg-black/30">
-
-<div class="max-w-6xl mx-auto px-6">
-
-<h2 class="text-4xl font-bold mb-12 text-center">
-รายวิชาทั้งหมด
-</h2>
-
-<div class="grid md:grid-cols-3 gap-6">
-
-<div class="card p-6 rounded-xl">
-
-<div class="text-blue-500 text-2xl mb-2">
-Microsoft Excel
-</div>
-
-<div class="text-gray-400 text-sm mb-4">
-VLOOKUP, IF, Formula
-</div>
-
-<div class="text-green-400 font-bold">
-Probability: สูงมาก
-</div>
-
-</div>
-
-
-<div class="card p-6 rounded-xl">
-
-<div class="text-blue-500 text-2xl mb-2">
-Cyber Security
-</div>
-
-<div class="text-gray-400 text-sm mb-4">
-Phishing, Malware
-</div>
-
-<div class="text-green-400 font-bold">
-Probability: สูงมาก
-</div>
-
-</div>
-
-
-<div class="card p-6 rounded-xl">
-
-<div class="text-blue-500 text-2xl mb-2">
-Cloud Computing
-</div>
-
-<div class="text-gray-400 text-sm mb-4">
-SaaS, PaaS, IaaS
-</div>
-
-<div class="text-green-400 font-bold">
-Probability: สูง
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- SUCCESS METRICS -->
-
-<section class="py-20">
-
-<div class="max-w-6xl mx-auto px-6 text-center">
-
-<h2 class="text-4xl font-bold mb-12">
-Elite Performance
-</h2>
-
-<div class="grid md:grid-cols-4 gap-8">
-
-<div>
-<div class="text-4xl font-bold text-blue-500">
-1000+
-</div>
-<div class="text-gray-400">
-Exam Questions
-</div>
-</div>
-
-
-<div>
-<div class="text-4xl font-bold text-blue-500">
-50+
-</div>
-<div class="text-gray-400">
-Exam Modules
-</div>
-</div>
-
-
-<div>
-<div class="text-4xl font-bold text-blue-500">
-93%
-</div>
-<div class="text-gray-400">
-Success Rate
-</div>
-</div>
-
-
-<div>
-<div class="text-4xl font-bold text-blue-500">
-24/7
-</div>
-<div class="text-gray-400">
-Training Access
-</div>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- FINAL CTA -->
-
-<section class="py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-center">
-
-<h2 class="text-4xl font-bold mb-6">
-เข้าสู่ระดับ Elite
-</h2>
-
-<button class="bg-white text-black px-10 py-4 rounded-lg font-bold text-lg hover:bg-gray-200">
-
-เริ่มฝึกทันที
-
-</button>
-
-</section>
-
-
+  <!-- Topbar -->
+  <header class="sticky top-0 z-50 bg-white/85 backdrop-blur border-b" style="border-color: var(--g-border);">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl flex items-center justify-center bg-[#e8f0fe] border" style="border-color: rgba(26,115,232,.25);">
+          <span class="text-xl">👮‍♂️</span>
+        </div>
+        <div class="leading-tight">
+          <div class="font-extrabold tracking-tight text-[15px] md:text-[16px]">Police Cadet Prep</div>
+          <div class="text-xs" style="color: var(--g-muted);">Google-style • นายร้อยตำรวจ • หลายวิชา/หลายชุดข้อสอบ</div>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-2">
+        <a class="px-4 py-2 rounded-full hover:bg-gray-100 text-sm font-semibold" href="#subjects">รายวิชา</a>
+        <a class="px-4 py-2 rounded-full hover:bg-gray-100 text-sm font-semibold" href="#system">ระบบเรียน</a>
+        <a class="px-4 py-2 rounded-full hover:bg-gray-100 text-sm font-semibold" href="#simulator">Exam Simulator</a>
+        <a class="px-4 py-2 rounded-full hover:bg-gray-100 text-sm font-semibold" href="#pricing">แพ็กเกจ</a>
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <button class="g-btn g-btn-ghost px-4 py-2 text-sm">เข้าสู่ระบบ</button>
+        <button class="g-btn g-btn-primary px-4 py-2 text-sm">เริ่มเรียนฟรี</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero-bg relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none dots opacity-40"></div>
+
+    <div class="max-w-7xl mx-auto px-4 py-14 md:py-20 relative">
+      <div class="grid lg:grid-cols-2 gap-10 items-center">
+        <div>
+          <div class="flex flex-wrap items-center gap-2 mb-4">
+            <span class="badge">ULTRA MAP • ระบบติวแบบเป็นแผนที่</span>
+            <span class="g-pill px-3 py-1 text-xs font-semibold">ปรับตามจุดอ่อน</span>
+            <span class="g-pill px-3 py-1 text-xs font-semibold">หลายวิชา</span>
+            <span class="g-pill px-3 py-1 text-xs font-semibold">หลายชุดข้อสอบ</span>
+          </div>
+
+          <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.08]">
+            Landing Page ระดับ <span style="color:var(--g-blue);">Google</span>
+            <br class="hidden md:block"/>
+            สำหรับ “ติวสอบ <span class="underline decoration-[rgba(26,115,232,.35)] decoration-4 underline-offset-4">นายร้อยตำรวจ</span>”
+          </h1>
+
+          <p class="mt-5 text-lg md:text-xl" style="color: var(--g-muted);">
+            เรียนแบบเป็นระบบ: <b>Course Map</b> → <b>Quiz Bank</b> → <b>Exam Simulator</b>  
+            พร้อมกลุ่มข้อสอบแยกตามวิชาและระดับความยาก เห็นแล้ว “รู้เลยว่านี่ของจริง”
+          </p>
+
+          <div class="mt-8 flex flex-col sm:flex-row gap-3">
+            <button class="g-btn g-btn-primary px-6 py-4 text-base">
+              เริ่มเรียนทันที (Free Preview)
+            </button>
+            <button class="g-btn g-btn-ghost px-6 py-4 text-base">
+              ดูตัวอย่างข้อสอบ
+            </button>
+          </div>
+
+          <div class="mt-6 flex flex-wrap items-center gap-3 text-sm" style="color: var(--g-muted);">
+            <span class="kbd">✓ แผน 21 วัน</span>
+            <span class="kbd">✓ Flashcards</span>
+            <span class="kbd">✓ เฉลยแบบติวเตอร์</span>
+            <span class="kbd">✓ Dashboard</span>
+          </div>
+        </div>
+
+        <!-- Hero Right: Google-ish dashboard card -->
+        <div class="relative">
+          <div class="g-card lift p-6 md:p-7">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-bold">Exam Readiness</div>
+                <div class="text-xs mt-1" style="color: var(--g-muted);">ประเมินความพร้อมแบบภาพรวม</div>
+              </div>
+              <div class="px-3 py-1 rounded-full text-xs font-bold" style="background:#e6f4ea; color:#137333; border:1px solid rgba(52,168,83,.25);">
+                LIVE
+              </div>
+            </div>
+
+            <div class="mt-6 grid grid-cols-3 gap-3">
+              <div class="g-card p-4 lift">
+                <div class="text-xs" style="color: var(--g-muted);">Overall</div>
+                <div class="text-3xl font-extrabold mt-1" style="color: var(--g-blue);">92%</div>
+                <div class="mt-3 h-2 rounded-full bg-gray-200">
+                  <div class="h-2 rounded-full" style="width:92%; background: var(--g-blue);"></div>
+                </div>
+              </div>
+              <div class="g-card p-4 lift">
+                <div class="text-xs" style="color: var(--g-muted);">Excel</div>
+                <div class="text-3xl font-extrabold mt-1" style="color: var(--g-green);">88%</div>
+                <div class="mt-3 h-2 rounded-full bg-gray-200">
+                  <div class="h-2 rounded-full" style="width:88%; background: var(--g-green);"></div>
+                </div>
+              </div>
+              <div class="g-card p-4 lift">
+                <div class="text-xs" style="color: var(--g-muted);">Cyber</div>
+                <div class="text-3xl font-extrabold mt-1" style="color: var(--g-red);">84%</div>
+                <div class="mt-3 h-2 rounded-full bg-gray-200">
+                  <div class="h-2 rounded-full" style="width:84%; background: var(--g-red);"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 g-card p-4" style="background:#f1f3f4;">
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#e8f0fe; border:1px solid rgba(26,115,232,.2);">
+                  <span>💡</span>
+                </div>
+                <div>
+                  <div class="font-bold">Smart Focus</div>
+                  <div class="text-sm mt-1" style="color: var(--g-muted);">
+                    ระบบจะแนะนำ “หัวข้อที่ออกบ่อย” ให้ฝึกก่อน เพื่อดันคะแนนขึ้นเร็วที่สุด
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="absolute -bottom-6 -right-4 hidden md:block">
+            <div class="g-card lift px-4 py-3 flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#fff; border:1px solid var(--g-border);">
+                🏆
+              </div>
+              <div class="leading-tight">
+                <div class="text-sm font-extrabold">Elite Mode</div>
+                <div class="text-xs" style="color: var(--g-muted);">Simulated Exam + Analytics</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust / Authority strip -->
+  <section class="py-10">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="g-card p-6 md:p-7 flex flex-col md:flex-row md:items-center md:justify-between gap-6 lift">
+        <div>
+          <div class="text-xl font-extrabold">สิ่งที่ทำให้ “ดูแล้วตกใจในความเทพ”</div>
+          <div class="text-sm mt-1" style="color: var(--g-muted);">
+            UI แบบ Google • โครงสร้างแบบ Academy • วางระบบรายวิชา/ข้อสอบเป็นหมวดหมู่ • เฉลยแบบติวเตอร์
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="g-pill px-4 py-2 text-sm font-semibold">Course Map</span>
+          <span class="g-pill px-4 py-2 text-sm font-semibold">Quiz Bank</span>
+          <span class="g-pill px-4 py-2 text-sm font-semibold">Exam Simulator</span>
+          <span class="g-pill px-4 py-2 text-sm font-semibold">21-Day Plan</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Subjects -->
+  <section id="subjects" class="py-14">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex items-end justify-between gap-4 mb-6">
+        <div>
+          <div class="text-sm font-bold" style="color: var(--g-blue);">SUBJECT SYSTEM</div>
+          <h2 class="text-3xl md:text-4xl font-extrabold mt-1">หลายวิชา • หลายกลุ่มข้อสอบ</h2>
+          <p class="mt-2 text-sm md:text-base" style="color: var(--g-muted);">
+            แยกหมวดชัดเจน: เรียน → ฝึก → สอบจำลอง → วิเคราะห์จุดอ่อน
+          </p>
+        </div>
+        <a class="g-link hidden md:inline" href="#simulator">ไปดู Exam Simulator →</a>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Card -->
+        <div class="g-card p-6 lift">
+          <div class="flex items-center justify-between">
+            <div class="font-extrabold text-xl">Microsoft Excel</div>
+            <span class="px-3 py-1 rounded-full text-xs font-bold" style="background:#e6f4ea; color:#137333; border:1px solid rgba(52,168,83,.25);">ออกบ่อย</span>
+          </div>
+          <p class="mt-2 text-sm" style="color: var(--g-muted);">IF, VLOOKUP/XLOOKUP, COUNTIF, Pivot, Charts</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="g-pill px-3 py-1 text-xs font-semibold">Basic</span>
+            <span class="g-pill px-3 py-1 text-xs font-semibold">Intermediate</span>
+            <span class="g-pill px-3 py-1 text-xs font-semibold">Hard Traps</span>
+          </div>
+        </div>
+
+        <div class="g-card p-6 lift">
+          <div class="flex items-center justify-between">
+            <div class="font-extrabold text-xl">Cybersecurity</div>
+            <span class="px-3 py-1 rounded-full text-xs font-bold" style="background:#fce8e6; color:#c5221f; border:1px solid rgba(234,67,53,.25);">คะแนนคุ้ม</span>
+          </div>
+          <p class="mt-2 text-sm" style="color: var(--g-muted);">Phishing, Malware, Password, 2FA, Social Engineering</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="g-pill px-3 py-1 text-xs font-semibold">Scenario</span>
+            <span class="g-pill px-3 py-1 text-xs font-semibold">Policy</span>
+            <span class="g-pill px-3 py-1 text-xs font-semibold">Traps</span>
+          </div>
+        </div>
+
+        <div class="g-card p-6 lift">
+          <div class="flex items-center justify-between">
+            <div class="font-extrabold text-xl">Cloud Computing</div>
+            <span class="px-3 py-1 rounded-full text-xs font-bold" style="background:#e8f0fe; color:#174ea6; border:1px solid rgba(26,115,232,.25);">มาตรฐาน</span>
+          </div>
+          <p class="mt-2 text-sm" style="color: var(--g-muted);">SaaS/PaaS/IaaS, Storage, Sharing, Security Basics</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="g-pill px-3 py-1 text-xs font-semibold">Concept</span>
+            <span class="g-pill px-3 py-1 text-xs font-semibold">Use-case</span>
+          </div>
+        </div>
+
+        <div class="g-card p-6 lift">
+          <div class="flex items-center justify-between">
+            <div class="font-extrabold text-xl">Microsoft Word</div>
+            <span class="px-3 py-1 rounded-full text-xs font-bold" style="background:#fff7e0; color:#a05a00; border:1px solid rgba(251,188,4,.25);">เก็บง่าย</span>
+          </div>
+          <p class="mt-2 text-sm" style="color: var(--g-muted);">Mail Merge, Page Setup, Styles, Track Changes</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="g-pill px-3 py-1 text-xs font-semibold">Office</span>
+            <span class="g-pill px-3 py-1 text-xs font-semibold">Traps</span>
+          </div>
+        </div>
+
+        <div class="g-card p-6 lift">
+          <div class="flex items-center justify-between">
+            <div class="font-extrabold text-xl">Network & IT Basics</div>
+            <span class="px-3 py-1 rounded-full text-xs font-bold" style="background:#f1f3f4; color:#3c4043; border:1px solid var(--g-border);">Foundation</span>
+          </div>
+          <p class="mt-2 text-sm" style="color: var(--g-muted);">IP, DNS, OS, Hardware, Troubleshooting</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="g-pill px-3 py-1 text-xs font-semibold">Concept</span>
+            <span class="g-pill px-3 py-1 text-xs font-semibold">Quick Wins</span>
+          </div>
+        </div>
+
+        <div class="g-card p-6 lift">
+          <div class="flex items-center justify-between">
+            <div class="font-extrabold text-xl">กฎหมาย & ข้อมูล</div>
+            <span class="px-3 py-1 rounded-full text-xs font-bold" style="background:#e6f4ea; color:#137333; border:1px solid rgba(52,168,83,.25);">ออกแน่</span>
+          </div>
+          <p class="mt-2 text-sm" style="color: var(--g-muted);">PDPA, พ.ร.บ.คอมฯ, Data Governance, Security</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="g-pill px-3 py-1 text-xs font-semibold">Definition</span>
+            <span class="g-pill px-3 py-1 text-xs font-semibold">Scenario</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- System preview -->
+  <section id="system" class="py-14 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid lg:grid-cols-2 gap-8 items-start">
+        <div>
+          <div class="text-sm font-bold" style="color: var(--g-blue);">LEARNING EXPERIENCE</div>
+          <h2 class="text-3xl md:text-4xl font-extrabold mt-1">เรียนแบบ Google-product style</h2>
+          <p class="mt-3 text-sm md:text-base" style="color: var(--g-muted);">
+            เน้นชัด อ่านง่าย ลื่น ใช้ได้จริง: เหมาะทำเป็นเว็บจริง/ระบบติวจริง
+          </p>
+
+          <div class="mt-6 space-y-3">
+            <div class="g-card p-5 lift">
+              <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl flex items-center justify-center" style="background:#e8f0fe; border:1px solid rgba(26,115,232,.2);">🗺️</div>
+                <div>
+                  <div class="font-extrabold">Course Map</div>
+                  <div class="text-sm" style="color: var(--g-muted);">เห็นเส้นทางทั้งหมด วางแผนได้ทันที</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="g-card p-5 lift">
+              <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl flex items-center justify-center" style="background:#e6f4ea; border:1px solid rgba(52,168,83,.2);">🧠</div>
+                <div>
+                  <div class="font-extrabold">Memory Bank</div>
+                  <div class="text-sm" style="color: var(--g-muted);">Flashcards + Trap Notes จำเร็ว ไม่ลืม</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="g-card p-5 lift">
+              <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl flex items-center justify-center" style="background:#fff7e0; border:1px solid rgba(251,188,4,.22);">🧪</div>
+                <div>
+                  <div class="font-extrabold">Drills</div>
+                  <div class="text-sm" style="color: var(--g-muted);">โจทย์แบบสถานการณ์ + เฉลยแบบติวเตอร์</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-7 flex gap-3">
+            <button class="g-btn g-btn-primary px-6 py-4 text-base">ทดลองเรียนฟรี</button>
+            <button class="g-btn g-btn-ghost px-6 py-4 text-base">รับแผน 21 วัน</button>
+          </div>
+        </div>
+
+        <!-- right preview: mini simulator -->
+        <div class="g-card p-6 md:p-7 lift">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="font-extrabold text-xl">Mini Exam Preview</div>
+              <div class="text-sm mt-1" style="color: var(--g-muted);">ตัวอย่างข้อสอบแบบเลือกตอบ (1/3)</div>
+            </div>
+            <span class="px-3 py-1 rounded-full text-xs font-bold" style="background:#f1f3f4; border:1px solid var(--g-border); color: var(--g-muted);">SIM</span>
+          </div>
+
+          <div class="mt-5 g-card p-5" style="background:#f8f9fa;">
+            <div class="text-sm font-bold">ข้อ 1) ถ้าต้องการค้นหาแบบ “ตรงกันเป๊ะ” ใน VLOOKUP ช่องสุดท้ายควรใส่อะไร?</div>
+            <div class="mt-4 grid gap-2">
+              <button class="w-full text-left px-4 py-3 rounded-xl bg-white border hover:bg-[#f1f7ff] transition" style="border-color: var(--g-border);">
+                A) 1 หรือ TRUE
+              </button>
+              <button class="w-full text-left px-4 py-3 rounded-xl bg-white border hover:bg-[#f1f7ff] transition" style="border-color: var(--g-border);">
+                B) 0 หรือ FALSE ✅
+              </button>
+              <button class="w-full text-left px-4 py-3 rounded-xl bg-white border hover:bg-[#f1f7ff] transition" style="border-color: var(--g-border);">
+                C) "EXACT"
+              </button>
+              <button class="w-full text-left px-4 py-3 rounded-xl bg-white border hover:bg-[#f1f7ff] transition" style="border-color: var(--g-border);">
+                D) ไม่ต้องใส่ก็ได้
+              </button>
+            </div>
+
+            <div class="mt-4 rounded-xl px-4 py-3 text-sm" style="background:#e6f4ea; color:#137333; border:1px solid rgba(52,168,83,.25);">
+              เฉลย: ใส่ <b>0 / FALSE</b> เพื่อ “Exact Match”
+            </div>
+          </div>
+
+          <div class="mt-6 flex items-center justify-between">
+            <div class="text-xs" style="color: var(--g-muted);">
+              กด “เริ่มสอบจำลอง” เพื่อสุ่มข้อสอบจากคลัง
+            </div>
+            <button class="g-btn g-btn-primary px-5 py-3 text-sm">เริ่มสอบจำลอง</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Simulator / Pricing -->
+  <section id="simulator" class="py-14">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-8">
+        <div class="text-sm font-bold" style="color: var(--g-blue);">EXAM SIMULATOR</div>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-1">สอบจำลอง + วิเคราะห์จุดอ่อน</h2>
+        <p class="mt-2 text-sm md:text-base" style="color: var(--g-muted);">
+          สอบเสร็จรู้ทันที: ผิดเพราะอะไร ต้องไปอ่านหัวข้อไหนต่อ
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="g-card p-6 lift">
+          <div class="text-4xl">📊</div>
+          <div class="font-extrabold text-xl mt-2">Score Analytics</div>
+          <div class="text-sm mt-1" style="color: var(--g-muted);">แยกคะแนนรายวิชา/รายบท</div>
+        </div>
+        <div class="g-card p-6 lift">
+          <div class="text-4xl">🎯</div>
+          <div class="font-extrabold text-xl mt-2">Weakness Map</div>
+          <div class="text-sm mt-1" style="color: var(--g-muted);">เห็นจุดอ่อนแบบภาพ</div>
+        </div>
+        <div class="g-card p-6 lift">
+          <div class="text-4xl">⚡</div>
+          <div class="font-extrabold text-xl mt-2">Smart Drills</div>
+          <div class="text-sm mt-1" style="color: var(--g-muted);">ฝึกเฉพาะข้อที่พลาด</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="py-14 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-8">
+        <div class="text-sm font-bold" style="color: var(--g-blue);">PACKAGES</div>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-1">เริ่มได้ฟรี แล้วค่อยอัปเกรด</h2>
+        <p class="mt-2 text-sm md:text-base" style="color: var(--g-muted);">โครงสร้างรองรับการทำระบบจริงได้เลย</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="g-card p-7 lift">
+          <div class="font-extrabold text-xl">Free Preview</div>
+          <div class="text-4xl font-extrabold mt-3" style="color: var(--g-blue);">฿0</div>
+          <ul class="mt-4 space-y-2 text-sm" style="color: var(--g-muted);">
+            <li>✓ ตัวอย่างรายวิชา</li>
+            <li>✓ Mini Exam (จำกัด)</li>
+            <li>✓ Flashcards (ชุดเล็ก)</li>
+          </ul>
+          <button class="g-btn g-btn-ghost w-full mt-6 px-5 py-3">เริ่มใช้ฟรี</button>
+        </div>
+
+        <div class="g-card p-7 lift" style="border-color: rgba(26,115,232,.55); box-shadow: 0 10px 26px rgba(26,115,232,.18);">
+          <div class="flex items-center justify-between">
+            <div class="font-extrabold text-xl">Pro Cadet</div>
+            <span class="badge">แนะนำ</span>
+          </div>
+          <div class="text-4xl font-extrabold mt-3" style="color: var(--g-blue);">฿…</div>
+          <ul class="mt-4 space-y-2 text-sm" style="color: var(--g-muted);">
+            <li>✓ Quiz Bank เต็มระบบ</li>
+            <li>✓ Exam Simulator</li>
+            <li>✓ เฉลยแบบติวเตอร์</li>
+            <li>✓ แผน 21 วัน</li>
+          </ul>
+          <button class="g-btn g-btn-primary w-full mt-6 px-5 py-3">อัปเกรด</button>
+        </div>
+
+        <div class="g-card p-7 lift">
+          <div class="font-extrabold text-xl">Elite Cadet</div>
+          <div class="text-4xl font-extrabold mt-3" style="color: var(--g-blue);">฿…</div>
+          <ul class="mt-4 space-y-2 text-sm" style="color: var(--g-muted);">
+            <li>✓ Analytics เต็ม</li>
+            <li>✓ ฝึกตามจุดอ่อนอัตโนมัติ</li>
+            <li>✓ Mock Exam หลายชุด</li>
+            <li>✓ ระบบติดตามความคืบหน้า</li>
+          </ul>
+          <button class="g-btn g-btn-ghost w-full mt-6 px-5 py-3">ดูรายละเอียด</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-10">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <div class="text-sm font-bold">Police Cadet Prep</div>
+      <div class="text-xs mt-2" style="color: var(--g-muted);">
+        Google-style landing • For educational / exam preparation use
+      </div>
+    </div>
+  </footer>
 
 </body>
 </html>
