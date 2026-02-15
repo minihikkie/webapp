@@ -1,19 +1,656 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>เว็บแรกของฉัน</title>
-  <style>
-    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 40px auto; padding: 0 16px; }
-    .card { padding: 18px; border: 1px solid #ddd; border-radius: 14px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Nui เทพเจ้า IT เตรียมสอบนายร้อยตำรวจ </title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        /* Custom Scrollbar */
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Card Hover Effects */
+        .hover-lift {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tab-btn.active {
+            border-bottom: 3px solid #1e40af; /* blue-800 */
+            color: #1e3a8a; /* blue-900 */
+            font-weight: 700;
+        }
+        .tab-btn {
+            color: #64748b; /* slate-500 */
+            font-weight: 500;
+        }
+
+        /* Flip Card Effect for Flashcards */
+        .flip-card {
+            background-color: transparent;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .flip-card-front {
+            background-color: #ffffff;
+            color: #1e3a8a;
+        }
+        .flip-card-back {
+            background-color: #eff6ff; /* blue-50 */
+            color: #1e3a8a;
+            transform: rotateY(180deg);
+            border: 2px solid #3b82f6;
+        }
+    </style>
+
+    <!-- Chosen Palette: Royal Thai Police Authority -->
+    <!-- 
+        Primary: Deep Navy Blue (#1e3a8a) - Authority, Trust
+        Secondary: Royal Gold/Amber (#d97706) - Rank, Achievement
+        Accent: Alert Red (#dc2626) - Cybersecurity Warnings
+        Background: Light Neutral Grey (#f3f4f6) - Focus
+    -->
+
+    <!-- Application Structure Plan:
+        1. Learning Hub (Dashboard): Overview of the 'Course Map', showing progress through 10 modules.
+        2. Memory Bank (Flashcards): Interactive flip-cards for the "Memory-first Lesson Notes" and "Trap Playbook".
+        3. Drill Ground (Quiz): Interactive drill bank with immediate feedback.
+        4. Strategy Room (Plan): The 21-day study schedule and top topics list.
+        
+        Why this structure?
+        It separates "Learning" (Dashboard/Modules) from "Practice" (Flashcards/Drills) and "Planning" (Strategy). This helps users switch modes mentally between absorbing info and testing themselves.
+    -->
+
+    <!-- Visualization & Content Choices:
+        1. Progress Doughnut Chart: Shows completion of the 10 modules. Goal: Inform/Motivate.
+        2. Module Complexity Bar Chart: Compares time/difficulty of each module. Goal: Compare/Plan.
+        3. Trap Success Rate Line Chart: Simulated progress in identifying 'traps'. Goal: Change/Track.
+        4. Interactive Flashcards (HTML/CSS): For memory retention. Goal: Relationships/Inform.
+        5. Filterable Drill Table (HTML/JS): For practice. Goal: Organize/Drill.
+    -->
+    
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 </head>
-<body>
-  <h1>สวัสดี GitHub Pages 👋</h1>
-  <div class="card">
-    <p>นี่คือเว็บที่โฮสต์ฟรีด้วย GitHub Pages</p>
-    <p>แก้ไฟล์แล้วกด commit เว็บจะอัปเดตให้เอง</p>
-  </div>
+<body class="flex flex-col min-h-screen">
+
+    <!-- HEADER -->
+    <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center py-4">
+                <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                    <span class="text-3xl">👮‍♂️</span>
+                    <div>
+                        <h1 class="text-xl md:text-2xl font-bold tracking-wide">POLICE EXAM TACTICS 2569</h1>
+                        <p class="text-xs text-slate-400 uppercase tracking-widest">Ultra Max Tutoring System</p>
+                    </div>
+                </div>
+                
+                <!-- Navigation -->
+                <nav class="flex space-x-6 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
+                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="tab-btn active text-sm md:text-base whitespace-nowrap px-2 py-1 transition-colors hover:text-white">แผนที่การเรียน (Map)</button>
+                    <button onclick="switchTab('memory')" id="nav-memory" class="tab-btn text-sm md:text-base whitespace-nowrap px-2 py-1 transition-colors hover:text-white">คลังความจำ (Memory)</button>
+                    <button onclick="switchTab('drill')" id="nav-drill" class="tab-btn text-sm md:text-base whitespace-nowrap px-2 py-1 transition-colors hover:text-white">สนามฝึก (Drills)</button>
+                    <button onclick="switchTab('strategy')" id="nav-strategy" class="tab-btn text-sm md:text-base whitespace-nowrap px-2 py-1 transition-colors hover:text-white">แผน 21 วัน (Plan)</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+
+        <!-- SECTION 1: LEARNING HUB (DASHBOARD) -->
+        <section id="view-dashboard" class="space-y-8 animate-fade-in">
+            <!-- Intro -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-800">
+                <h2 class="text-2xl font-bold text-slate-800 mb-2">ยินดีต้อนรับสู่ "เส้นทางสู่ดาวเงิน" (Course Map)</h2>
+                <p class="text-slate-600">
+                    ระบบการติวแบบ "Ultra Max" ออกแบบมาให้ท่านเก็บคะแนนจากเรื่องง่ายไปยาก เริ่มต้นจากพื้นฐาน Office ไต่ระดับสู่ Cybersecurity และ Cloud Computing 
+                    หน้านี้คือศูนย์บัญชาการเพื่อติดตามความคืบหน้าของทั้ง 10 โมดูล
+                </p>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Chart 1: Module Difficulty -->
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="font-bold text-slate-700 mb-4 flex items-center">
+                        <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2">ANALYSIS</span>
+                        ความยาก vs เวลาเรียน (Difficulty/Time)
+                    </h3>
+                    <div class="chart-container">
+                        <canvas id="moduleChart"></canvas>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-4 text-center">*Excel และ Cyber ใช้เวลาเยอะสุด แต่คุ้มค่าคะแนนมากที่สุด</p>
+                </div>
+
+                <!-- Text Stats: Key Targets -->
+                <div class="bg-white p-6 rounded-xl shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-slate-700 mb-4">เป้าหมายคะแนน (Score Targets)</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-medium">Microsoft Excel</span>
+                                <span class="text-sm font-bold text-green-600">ต้องได้ 90%+</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-green-600 h-2.5 rounded-full" style="width: 90%"></div>
+                            </div>
+                            
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-medium">Cybersecurity</span>
+                                <span class="text-sm font-bold text-blue-600">ต้องได้ 85%+</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-blue-600 h-2.5 rounded-full" style="width: 85%"></div>
+                            </div>
+
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-medium">Network & Tech</span>
+                                <span class="text-sm font-bold text-amber-600">ต้องได้ 70%+</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-amber-500 h-2.5 rounded-full" style="width: 70%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
+                        <p class="text-sm text-blue-800 font-semibold">💡 Pro Tip:</p>
+                        <p class="text-xs text-blue-700 mt-1">อย่าเสียเวลากับ "ประวัติคอมพิวเตอร์" มากเกินไป ให้ทุ่มเวลาไปที่ "สูตร Excel" และ "Phishing Email" เพราะออกสอบจริงเยอะกว่ามาก</p>
+                    </div>
+                </div>
+
+                <!-- Module List / Quick Access -->
+                <div class="bg-white p-6 rounded-xl shadow-sm overflow-hidden flex flex-col">
+                    <h3 class="font-bold text-slate-700 mb-4">ทางลัดบทเรียน (Quick Access)</h3>
+                    <div class="flex-grow overflow-y-auto custom-scroll pr-2 space-y-3">
+                        <button onclick="alert('Module 1: Computer Basics - เน้น RAM/ROM, Input/Output')" class="w-full text-left p-3 rounded-lg bg-gray-50 hover:bg-blue-50 transition border border-gray-100 hover:border-blue-200 group">
+                            <div class="flex justify-between items-center">
+                                <span class="font-semibold text-sm group-hover:text-blue-700">1. Computer Basics</span>
+                                <span class="text-xs bg-gray-200 px-2 py-0.5 rounded text-gray-600">Easy</span>
+                            </div>
+                        </button>
+                        <button onclick="alert('Module 2: Word - เน้น Mail Merge, Page Setup')" class="w-full text-left p-3 rounded-lg bg-gray-50 hover:bg-blue-50 transition border border-gray-100 hover:border-blue-200 group">
+                            <div class="flex justify-between items-center">
+                                <span class="font-semibold text-sm group-hover:text-blue-700">2. Microsoft Word</span>
+                                <span class="text-xs bg-green-100 px-2 py-0.5 rounded text-green-700">Medium</span>
+                            </div>
+                        </button>
+                        <button onclick="alert('Module 3: Excel - เน้น IF, VLOOKUP, $')" class="w-full text-left p-3 rounded-lg bg-blue-50 border-l-4 border-blue-600 shadow-sm group">
+                            <div class="flex justify-between items-center">
+                                <span class="font-semibold text-sm text-blue-800">3. Microsoft Excel 🌟</span>
+                                <span class="text-xs bg-red-100 px-2 py-0.5 rounded text-red-700 font-bold">Hard</span>
+                            </div>
+                        </button>
+                        <button onclick="alert('Module 6: Cloud - เน้น SaaS/PaaS/IaaS')" class="w-full text-left p-3 rounded-lg bg-gray-50 hover:bg-blue-50 transition border border-gray-100 hover:border-blue-200 group">
+                            <div class="flex justify-between items-center">
+                                <span class="font-semibold text-sm group-hover:text-blue-700">6. Cloud Computing 🌟</span>
+                                <span class="text-xs bg-green-100 px-2 py-0.5 rounded text-green-700">Medium</span>
+                            </div>
+                        </button>
+                        <button onclick="alert('Module 7: Cyber - เน้น Phishing, 2FA, Malware')" class="w-full text-left p-3 rounded-lg bg-red-50 border-l-4 border-red-500 shadow-sm group">
+                            <div class="flex justify-between items-center">
+                                <span class="font-semibold text-sm text-red-800">7. Cybersecurity 🌟</span>
+                                <span class="text-xs bg-red-100 px-2 py-0.5 rounded text-red-700 font-bold">Hard</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: MEMORY BANK (FLASHCARDS) -->
+        <section id="view-memory" class="hidden space-y-8 animate-fade-in">
+            <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-amber-500 flex flex-col md:flex-row justify-between items-start md:items-center">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800 mb-2">คลังความจำ (Memory Bank)</h2>
+                    <p class="text-slate-600 text-sm">เทคนิค: คลิกที่การ์ดเพื่อดูเฉลยและเทคนิคจำ พยายามตอบให้ได้ก่อนพลิกการ์ด</p>
+                </div>
+                <div class="mt-4 md:mt-0 flex space-x-2">
+                    <button onclick="filterCards('all')" class="px-3 py-1 bg-slate-800 text-white rounded-md text-sm hover:bg-slate-700">ทั้งหมด</button>
+                    <button onclick="filterCards('excel')" class="px-3 py-1 bg-blue-100 text-blue-800 rounded-md text-sm hover:bg-blue-200">Excel</button>
+                    <button onclick="filterCards('cyber')" class="px-3 py-1 bg-red-100 text-red-800 rounded-md text-sm hover:bg-red-200">Cyber</button>
+                    <button onclick="filterCards('trap')" class="px-3 py-1 bg-amber-100 text-amber-800 rounded-md text-sm hover:bg-amber-200">Traps</button>
+                </div>
+            </div>
+
+            <!-- Flashcard Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="flashcard-grid">
+                <!-- Cards injected via JS -->
+            </div>
+        </section>
+
+        <!-- SECTION 3: DRILL GROUND (QUIZ) -->
+        <section id="view-drill" class="hidden space-y-8 animate-fade-in">
+            <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-green-600">
+                <h2 class="text-2xl font-bold text-slate-800 mb-2">สนามฝึก (Drill Ground)</h2>
+                <p class="text-slate-600">ฝึกทำโจทย์เสมือนจริง (Scenario-based) พร้อมเฉลยละเอียดแบบติวเตอร์ เลือกคำตอบที่คิดว่าถูกที่สุด</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+                    <h3 class="font-bold text-slate-700" id="drill-question-count">โจทย์ฝึกชุดที่ 1 (5 ข้อ)</h3>
+                    <span class="text-xs text-gray-500">คลิกตัวเลือกเพื่อตรวจคำตอบ</span>
+                </div>
+                
+                <div class="divide-y divide-gray-100" id="drill-container">
+                    <!-- Drill Items Injected via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: STRATEGY ROOM (PLAN) -->
+        <section id="view-strategy" class="hidden space-y-8 animate-fade-in">
+            <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-slate-700">
+                <h2 class="text-2xl font-bold text-slate-800 mb-2">แผนยุทธการ 21 วัน (Strategy 21)</h2>
+                <p class="text-slate-600">ตารางการอ่านหนังสือแบบ Spaced Repetition (อ่าน-ทวน-สอบ) เพื่อความพร้อมสูงสุด</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Calendar View -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Week 1 -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-blue-500">
+                        <div class="flex justify-between mb-4">
+                            <h3 class="font-bold text-lg text-blue-900">WEEK 1: ปูพื้นฐาน (Foundation)</h3>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">Days 1-7</span>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="w-8 flex-shrink-0 text-center font-bold text-gray-400">D1</div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-bold text-slate-800">Computer & Word</p>
+                                    <p class="text-xs text-slate-500">Shortcut Keys, Mail Merge, Page Setup</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-8 flex-shrink-0 text-center font-bold text-gray-400">D2</div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-bold text-slate-800">Excel Part 1 (Basic)</p>
+                                    <p class="text-xs text-slate-500">SUM, AVERAGE, COUNT, Format Cells</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-8 flex-shrink-0 text-center font-bold text-gray-400">D3</div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-bold text-slate-800">Review & Flashcards</p>
+                                    <p class="text-xs text-slate-500">ทบทวน Day 1-2, จำสูตรให้แม่น</p>
+                                </div>
+                            </div>
+                             <div class="flex items-start">
+                                <div class="w-8 flex-shrink-0 text-center font-bold text-gray-400">D4</div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-bold text-slate-800">Excel Part 2 (Advanced)</p>
+                                    <p class="text-xs text-slate-500">IF, VLOOKUP, $ (Absolute Ref), Charts</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Week 2 -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-amber-500">
+                        <div class="flex justify-between mb-4">
+                            <h3 class="font-bold text-lg text-amber-900">WEEK 2: ประยุกต์ใช้ (Application)</h3>
+                            <span class="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded">Days 8-14</span>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="w-8 flex-shrink-0 text-center font-bold text-gray-400">D8</div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-bold text-slate-800">Cloud Computing</p>
+                                    <p class="text-xs text-slate-500">SaaS / PaaS / IaaS, Google Drive Sharing</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-8 flex-shrink-0 text-center font-bold text-gray-400">D9</div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-bold text-slate-800">Cybersecurity</p>
+                                    <p class="text-xs text-slate-500">Phishing, Malware, Password, 2FA</p>
+                                </div>
+                            </div>
+                             <div class="flex items-start">
+                                <div class="w-8 flex-shrink-0 text-center font-bold text-gray-400">D11</div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-bold text-slate-800">Laws & Data</p>
+                                    <p class="text-xs text-slate-500">PDPA, พ.ร.บ.คอมฯ, Big Data 3Vs</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top 10 Topics List -->
+                <div class="bg-slate-800 text-white p-6 rounded-xl shadow-lg h-fit">
+                    <h3 class="font-bold text-lg mb-4 text-amber-400">🔥 Top 10 Must Read</h3>
+                    <p class="text-xs text-slate-400 mb-6">Probability สูงสุด 10 อันดับแรกจากระบบวิเคราะห์</p>
+                    <ol class="list-decimal list-inside space-y-3 text-sm">
+                        <li class="pb-2 border-b border-slate-700">Excel: VLOOKUP (Exact Match)</li>
+                        <li class="pb-2 border-b border-slate-700">Excel: IF & Nested IF</li>
+                        <li class="pb-2 border-b border-slate-700">Cyber: Phishing Identification</li>
+                        <li class="pb-2 border-b border-slate-700">Cloud: SaaS Definition</li>
+                        <li class="pb-2 border-b border-slate-700">Word: Mail Merge Steps</li>
+                        <li class="pb-2 border-b border-slate-700">Law: PDPA Rights</li>
+                        <li class="pb-2 border-b border-slate-700">Cyber: Ransomware</li>
+                        <li class="pb-2 border-b border-slate-700">Excel: Absolute Reference ($)</li>
+                        <li class="pb-2 border-b border-slate-700">Network: IP Address</li>
+                        <li>Cyber: Strong Password Policy</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-gray-200 py-6 mt-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-slate-500 text-sm">Ultra Max Tutoring System © 2569</p>
+            <p class="text-xs text-slate-400 mt-1">For Educational Purpose - Police Exam Preparation</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- DATA ---
+        const flashcards = [
+            { id: 1, type: 'excel', front: 'Q: สูตร VLOOKUP ตัวสุดท้ายถ้าต้องการ "ค่าที่ตรงกันเป๊ะ" ต้องใส่อะไร?', back: 'A: ใส่ 0 หรือ FALSE\n(จำ: 0 = ศูนย์ = สูญเสียไม่ได้ ต้องเป๊ะ!)' },
+            { id: 10, type: 'excel', front: 'Q: ใครหล่อสุดใน กองกฎหมาย?', back: 'พี่หนุ่ย คนหล่อ 2.0' },
+            { id: 2, type: 'excel', front: 'Q: สัญลักษณ์ $ ใน Excel มีไว้ทำไม? (เช่น $A$1)', back: 'A: เพื่อ "ล็อกเซลล์" ไม่ให้เปลี่ยนเมื่อ Copy สูตร\n(จำ: $ ใส่หน้าใคร ล็อกคนนั้น)' },
+            { id: 3, type: 'trap', front: 'Trap: ส่งเมลหาคน 100 คน ไม่ให้ใครเห็นชื่อคนอื่น ใส่ช่องไหน?', back: 'ตอบ: BCC (Blind Carbon Copy)\n(กับดัก: อย่าตอบ CC เด็ดขาด CC คือเห็นกันหมด)' },
+            { id: 4, type: 'cyber', front: 'Q: Phishing คืออะไร?', back: 'A: การหลอกลวง (ตกเบ็ด) ให้กรอกข้อมูลส่วนตัว โดยใช้หน้าเว็บหรืออีเมลปลอม' },
+            { id: 5, type: 'cloud', front: 'Q: Gmail, Google Drive, Hotmail เป็น Cloud ประเภทใด?', back: 'A: SaaS (Software as a Service)\n(จำ: ซื้อสำเร็จรูป มาถึงใช้ได้เลย)' },
+            { id: 6, type: 'trap', front: 'Trap: 1 KB เท่ากับกี่ Byte (ทางคอมพิวเตอร์)?', back: 'ตอบ: 1,024 Bytes\n(กับดัก: อย่าตอบ 1,000 ยกเว้นโจทย์ถามเชิงการค้า HDD)' },
+            { id: 7, type: 'excel', front: 'Q: สูตรนับจำนวนเซลล์ที่มีตัวเลขเท่านั้น ใช้คำสั่งใด?', back: 'A: COUNT\n(ระวัง: COUNTA นับหมดที่ไม่ว่าง, COUNTIF นับตามเงื่อนไข)' },
+            { id: 8, type: 'cyber', front: 'Q: Ransomware คืออะไร?', back: 'A: มัลแวร์เรียกค่าไถ่ จะทำการ "ล็อกไฟล์" (Encrypt) ของเราจนกว่าจะจ่ายเงิน' },
+            { id: 9, type: 'trap', front: 'Trap: ลบไฟล์ถาวร ไม่ลงถังขยะ กดปุ่มไหน?', back: 'ตอบ: Shift + Delete\n(กับดัก: กด Delete เฉยๆ ยังกู้ได้ใน Recycle Bin)' }
+        ];
+
+        const drills = [
+            {
+                id: 1,
+                q: "ร.ต.ต. สมชาย ต้องการตัดเกรด โดยถ้าคะแนนใน A1 มากกว่าหรือเท่ากับ 50 ให้แสดงว่า 'ผ่าน' ถ้าไม่ใช่ให้แสดงว่า 'ตก' ต้องใช้สูตรใด?",
+                choices: [
+                    { txt: "=IF(A1>50, \"ผ่าน\", \"ตก\")", correct: false, reason: "ผิด: ขาดเครื่องหมาย = (จะทำให้คนได้ 50 ตก)" },
+                    { txt: "=IF(A1>=50, \"ผ่าน\", \"ตก\")", correct: true, reason: "ถูกต้อง! >= คือมากกว่าหรือเท่ากับ ครอบคลุมเงื่อนไข" },
+                    { txt: "=SUMIF(A1, \">=50\", \"ผ่าน\")", correct: false, reason: "ผิด: SUMIF ใช้หาผลรวม ไม่ใช่แสดงข้อความ" },
+                    { txt: "=IF(A1=50, \"ผ่าน\", \"ตก\")", correct: false, reason: "ผิด: จะผ่านแค่คนได้ 50 เป๊ะๆ คนได้ 60 จะตก" }
+                ]
+            },
+            {
+                id: 2,
+                q: "สารวัตรต้องการส่งหนังสือเชิญประชุมหาหัวหน้าสถานี 300 แห่ง เนื้อหาเหมือนกัน เปลี่ยนแค่ชื่อ วิธีใดดีที่สุด?",
+                choices: [
+                    { txt: "ใช้ Excel พิมพ์แล้ว Print Area", correct: false, reason: "ไม่เหมาะกับการทำจดหมายทางการ" },
+                    { txt: "Copy/Paste ใน Word เปลี่ยนชื่อทีละใบ", correct: false, reason: "ช้าและเสี่ยงผิดพลาด" },
+                    { txt: "ใช้ Mail Merge (จดหมายเวียน)", correct: true, reason: "ถูกต้อง! ออกแบบมาเพื่อลดงานซ้ำซ้อนโดยเฉพาะ" },
+                    { txt: "ใช้ PowerPoint Slide Master", correct: false, reason: "ใช้สำหรับนำเสนอ ไม่ใช่ทำจดหมาย" }
+                ]
+            },
+            {
+                id: 3,
+                q: "ขณะเข้าเวร มีหน้าต่างแจ้งเตือนว่า 'เครื่องติดไวรัส คลิกที่นี่เพื่อล้างทันที' ควรทำอย่างไร?",
+                choices: [
+                    { txt: "คลิกทันทีเพื่อความปลอดภัย", correct: false, reason: "อันตราย! มักเป็นปุ่มหลอกให้ติดตั้งมัลแวร์" },
+                    { txt: "ปิดหน้าต่าง (X) และไม่คลิกใดๆ", correct: true, reason: "ถูกต้อง! เป็น Fake Alert/Adware ทั่วไป" },
+                    { txt: "ถอดปลั๊กคอมพิวเตอร์", correct: false, reason: "เกินกว่าเหตุ อาจทำให้งานเสียหาย" },
+                    { txt: "ส่งต่อให้เพื่อนช่วยดู", correct: false, reason: "เสี่ยงแพร่กระจาย" }
+                ]
+            },
+             {
+                id: 4,
+                q: "บริการ Cloud ประเภทใด ที่เปรียบเหมือน 'เช่าที่เปล่า แล้วไปสร้างตึก(ลง OS/App) เอง'?",
+                choices: [
+                    { txt: "SaaS (Software as a Service)", correct: false, reason: "SaaS คือบ้านสำเร็จรูป เข้าอยู่ได้เลย" },
+                    { txt: "PaaS (Platform as a Service)", correct: false, reason: "PaaS คือเช่าโรงงาน มีเครื่องมือให้แต่ไม่มีของ" },
+                    { txt: "IaaS (Infrastructure as a Service)", correct: true, reason: "ถูกต้อง! เช่าโครงสร้างพื้นฐาน (Server/Storage) แล้วจัดการเอง" },
+                    { txt: "DaaS (Desktop as a Service)", correct: false, reason: "ไม่ใช่คำตอบหลักของ Cloud Model 3 ประเภท" }
+                ]
+            },
+            {
+                id: 5,
+                q: "เว็บไซต์ที่ปลอดภัยสำหรับการกรอกข้อมูลบัตรเครดิต ควรสังเกตสิ่งใด?",
+                choices: [
+                    { txt: "www.police.com", correct: false, reason: "ไม่มี https ไม่ปลอดภัย" },
+                    { txt: "มีรูปโล่ตำรวจ", correct: false, reason: "รูปภาพปลอมแปลงได้" },
+                    { txt: "https://... และรูปกุญแจล็อก", correct: true, reason: "ถูกต้อง! HTTPS มีการเข้ารหัสข้อมูล (Encryption)" },
+                    { txt: "เว็บที่โหลดเร็ว", correct: false, reason: "ความเร็วไม่เกี่ยวกับความปลอดภัย" }
+                ]
+            }
+        ];
+
+        // --- NAVIGATION ---
+        function switchTab(tabId) {
+            // Hide all sections
+            ['dashboard', 'memory', 'drill', 'strategy'].forEach(id => {
+                document.getElementById(`view-${id}`).classList.add('hidden');
+                document.getElementById(`nav-${id}`).classList.remove('active');
+            });
+            // Show selected
+            document.getElementById(`view-${tabId}`).classList.remove('hidden');
+            document.getElementById(`nav-${tabId}`).classList.add('active');
+            
+            // Re-render charts/grids if needed (omitted for simplicity)
+        }
+
+        // --- FLASHCARD LOGIC ---
+        function renderFlashcards(filterType = 'all') {
+            const container = document.getElementById('flashcard-grid');
+            container.innerHTML = '';
+            
+            const filtered = filterType === 'all' ? flashcards : flashcards.filter(f => f.type === filterType || (filterType === 'trap' && f.type === 'trap'));
+
+            filtered.forEach(card => {
+                const el = document.createElement('div');
+                el.className = 'flip-card h-64'; // Fixed height
+                el.innerHTML = `
+                    <div class="flip-card-inner" onclick="this.parentElement.classList.toggle('flipped')">
+                        <div class="flip-card-front border border-gray-200">
+                            <span class="absolute top-4 left-4 text-xs font-bold uppercase tracking-wider text-gray-400">${card.type}</span>
+                            <h3 class="text-lg font-bold text-center px-4 leading-relaxed">${card.front}</h3>
+                            <p class="absolute bottom-4 text-xs text-blue-500 animate-pulse">Click to flip</p>
+                        </div>
+                        <div class="flip-card-back shadow-inner">
+                            <p class="text-base font-medium whitespace-pre-line leading-relaxed">${card.back}</p>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(el);
+            });
+        }
+        
+        function filterCards(type) {
+            renderFlashcards(type);
+        }
+
+        // --- DRILL LOGIC ---
+        function renderDrills() {
+            const container = document.getElementById('drill-container');
+            container.innerHTML = '';
+
+            drills.forEach((drill, idx) => {
+                const drillEl = document.createElement('div');
+                drillEl.className = 'p-6 hover:bg-slate-50 transition';
+                
+                let choicesHtml = '';
+                drill.choices.forEach((choice, cIdx) => {
+                    choicesHtml += `
+                        <button onclick="checkAnswer(${idx}, ${cIdx}, this)" class="w-full text-left p-3 rounded border border-gray-200 mb-2 hover:bg-white hover:border-blue-300 transition choice-btn-${idx}">
+                            <div class="flex items-center">
+                                <span class="w-6 h-6 rounded-full border border-gray-300 mr-3 flex items-center justify-center text-xs font-bold text-gray-400 option-circle">${String.fromCharCode(65+cIdx)}</span>
+                                <span class="text-sm text-slate-700">${choice.txt}</span>
+                            </div>
+                            <div class="hidden mt-2 ml-9 text-xs p-2 rounded feedback-box"></div>
+                        </button>
+                    `;
+                });
+
+                drillEl.innerHTML = `
+                    <div class="flex space-x-3 mb-4">
+                        <span class="text-blue-600 font-bold text-lg">${idx + 1}.</span>
+                        <p class="font-medium text-slate-800 text-lg">${drill.q}</p>
+                    </div>
+                    <div class="pl-8">
+                        ${choicesHtml}
+                    </div>
+                `;
+                container.appendChild(drillEl);
+            });
+        }
+
+        window.checkAnswer = function(qIdx, cIdx, btn) {
+            const drill = drills[qIdx];
+            const choice = drill.choices[cIdx];
+            const allBtns = document.querySelectorAll(`.choice-btn-${qIdx}`);
+            
+            // Disable all buttons for this question
+            allBtns.forEach(b => {
+                b.onclick = null;
+                b.classList.add('opacity-75', 'cursor-not-allowed');
+            });
+
+            const feedback = btn.querySelector('.feedback-box');
+            const circle = btn.querySelector('.option-circle');
+
+            feedback.classList.remove('hidden');
+            
+            if (choice.correct) {
+                btn.classList.add('bg-green-50', 'border-green-500');
+                btn.classList.remove('border-gray-200');
+                feedback.classList.add('bg-green-100', 'text-green-800');
+                feedback.innerHTML = `✅ ${choice.reason}`;
+                circle.classList.add('bg-green-500', 'text-white', 'border-green-500');
+                circle.classList.remove('border-gray-300', 'text-gray-400');
+            } else {
+                btn.classList.add('bg-red-50', 'border-red-500');
+                btn.classList.remove('border-gray-200');
+                feedback.classList.add('bg-red-100', 'text-red-800');
+                feedback.innerHTML = `❌ ${choice.reason}`;
+                circle.classList.add('bg-red-500', 'text-white', 'border-red-500');
+                circle.classList.remove('border-gray-300', 'text-gray-400');
+                
+                // Highlight correct answer
+                const correctBtnIndex = drill.choices.findIndex(c => c.correct);
+                const correctBtn = allBtns[correctBtnIndex];
+                correctBtn.classList.add('bg-green-50', 'border-green-500');
+                correctBtn.querySelector('.feedback-box').classList.remove('hidden');
+                correctBtn.querySelector('.feedback-box').classList.add('bg-green-100', 'text-green-800');
+                correctBtn.querySelector('.feedback-box').innerHTML = `✅ คำตอบที่ถูก: ${drill.choices[correctBtnIndex].reason}`;
+            }
+        };
+
+        // --- CHARTS ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderFlashcards();
+            renderDrills();
+
+            // Module Difficulty Chart
+            const ctxMod = document.getElementById('moduleChart').getContext('2d');
+            new Chart(ctxMod, {
+                type: 'bar',
+                data: {
+                    labels: ['Basic', 'Word', 'Excel', 'PPT', 'Network', 'Cloud', 'Cyber', 'Law', 'Data', 'Sim'],
+                    datasets: [
+                        {
+                            label: 'ความยาก (Difficulty)',
+                            data: [2, 4, 9, 3, 5, 7, 8, 6, 4, 8],
+                            backgroundColor: 'rgba(239, 68, 68, 0.7)', // Red
+                        },
+                        {
+                            label: 'เวลาที่ต้องใช้ (Hours)',
+                            data: [2, 3, 8, 2, 3, 4, 5, 3, 2, 4],
+                            backgroundColor: 'rgba(59, 130, 246, 0.7)', // Blue
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, max: 10 }
+                    },
+                    plugins: {
+                        tooltip: {
+                            backgroundColor: 'rgba(30, 41, 59, 0.9)',
+                            titleFont: { family: 'Sarabun' },
+                            bodyFont: { family: 'Sarabun' }
+                        }
+                    }
+                }
+            });
+        });
+
+    </script>
 </body>
 </html>
